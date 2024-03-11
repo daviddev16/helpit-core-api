@@ -1,0 +1,32 @@
+
+helpit:
+  configuracao-global:
+    max-empresas-usuario-padrao: 5
+
+  coreApi:
+    version: 1.0.0.0
+    workerId: 1
+
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5433/HELPIT-DB01
+    username: postgres
+    password: abc@123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /helpit-core-api
+    application-display-name: HelpitCoreAPI
+
+
