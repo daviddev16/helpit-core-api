@@ -1,11 +1,11 @@
 package br.com.helpit.usuario.controller.v1;
 
 import br.com.helpit.usuario.Usuario;
-import br.com.helpit.usuario.dto.request.RequestRegistrarUsuarioDTO;
-import br.com.helpit.usuario.dto.response.ResponseUsuarioDTO;
+import br.com.helpit.usuario.dto.request.RegistrarUsuarioRequestDTO;
+import br.com.helpit.usuario.dto.response.UsuarioResponseDTO;
 import br.com.helpit.usuario.service.CodigoConfirmacaoService;
 import br.com.helpit.usuario.service.UsuarioService;
-import br.com.helpit.usuario.transformer.ResponseUsuarioTransformer;
+import br.com.helpit.usuario.transformer.UsuarioResponseTransformer;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,28 +17,28 @@ public class UsuarioAuthController {
 
     private final CodigoConfirmacaoService codigoConfirmacaoService;
 
-    private final ResponseUsuarioTransformer responseUsuarioTransformer;
+    private final UsuarioResponseTransformer usuarioResponseTransformer;
 
     public UsuarioAuthController(
             UsuarioService usuarioService,
             CodigoConfirmacaoService codigoConfirmacaoService,
-            ResponseUsuarioTransformer responseUsuarioTransformer)
+            UsuarioResponseTransformer usuarioResponseTransformer)
     {
         this.codigoConfirmacaoService = codigoConfirmacaoService;
-        this.responseUsuarioTransformer = responseUsuarioTransformer;
+        this.usuarioResponseTransformer = usuarioResponseTransformer;
         this.usuarioService = usuarioService;
     }
 
     @PostMapping(value = "/signup")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseUsuarioDTO registarUsuario(@RequestBody RequestRegistrarUsuarioDTO registrarUsuarioDTO)
+    public UsuarioResponseDTO registarUsuario(@RequestBody RegistrarUsuarioRequestDTO registrarUsuarioDTO)
     {
         Usuario criadoNovoUsuario = usuarioService.registrarUsuario(registrarUsuarioDTO);
 
         String codigoConfirmacao = codigoConfirmacaoService
                 .obterCodigoConfirmacaoDeUsuario(criadoNovoUsuario);
 
-        return responseUsuarioTransformer
+        return usuarioResponseTransformer
                 .transformarUsuarioEmResponseUsuarioDTO( criadoNovoUsuario, codigoConfirmacao );
     }
 

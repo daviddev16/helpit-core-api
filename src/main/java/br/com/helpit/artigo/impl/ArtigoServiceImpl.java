@@ -1,10 +1,10 @@
 package br.com.helpit.artigo.impl;
 
 import br.com.helpit.artigo.Artigo;
-import br.com.helpit.artigo.dto.request.RequestRegistrarArtigoDTO;
+import br.com.helpit.artigo.dto.request.RegistrarArtigoRequestDTO;
 import br.com.helpit.artigo.repository.ArtigoRepository;
 import br.com.helpit.artigo.service.ArtigoService;
-import br.com.helpit.artigo.transformer.RequestArtigoTransformer;
+import br.com.helpit.artigo.transformer.ArtigoRequestTransformer;
 import br.com.helpit.core.AuthenticatedService;
 import br.com.helpit.core.ServiceException;
 import br.com.helpit.empresa.Empresa;
@@ -26,24 +26,24 @@ public class ArtigoServiceImpl implements ArtigoService, AuthenticatedService {
     private final UsuarioEmpresaService usuarioEmpresaService;
     private final UsuarioService usuarioService;
 
-    private final RequestArtigoTransformer requestArtigoTransformer;
+    private final ArtigoRequestTransformer artigoRequestTransformer;
 
     public ArtigoServiceImpl(ArtigoRepository artigoRepository,
                              EmpresaService empresaService,
                              UsuarioEmpresaService usuarioEmpresaService,
                              UsuarioService usuarioService,
-                             RequestArtigoTransformer requestArtigoTransformer) {
+                             ArtigoRequestTransformer artigoRequestTransformer) {
 
         this.artigoRepository = artigoRepository;
         this.empresaService = empresaService;
         this.usuarioEmpresaService = usuarioEmpresaService;
         this.usuarioService = usuarioService;
-        this.requestArtigoTransformer = requestArtigoTransformer;
+        this.artigoRequestTransformer = artigoRequestTransformer;
     }
 
     @Override
     @Transactional
-    public Artigo criarArtigo(RequestRegistrarArtigoDTO registrarArtigoDTO, Long empresaId) {
+    public Artigo criarArtigo(RegistrarArtigoRequestDTO registrarArtigoDTO, Long empresaId) {
 
         final Authentication authentication = getAuthentication();
 
@@ -56,8 +56,8 @@ public class ArtigoServiceImpl implements ArtigoService, AuthenticatedService {
             throw new ServiceException(String.format("%s não possui acesso a empresa %d.",
                     usuarioAutenticado.getLogin(), empresaId));
 
-        final Artigo novoArtigo = requestArtigoTransformer
-                .transformarRegistrarArtigoDTOEmArtigo(registrarArtigoDTO);
+        final Artigo novoArtigo = artigoRequestTransformer
+                .transformarArtigoRequestEmArtigo(registrarArtigoDTO);
 
         novoArtigo.setUsuario(usuarioAutenticado);
         novoArtigo.setEmpresa(empresa);

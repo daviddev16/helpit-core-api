@@ -4,7 +4,7 @@ import br.com.helpit.core.AuthenticatedService;
 import br.com.helpit.empresa.CargoEmpresa;
 import br.com.helpit.empresa.Empresa;
 import br.com.helpit.empresa.UsuarioEmpresa;
-import br.com.helpit.empresa.dto.request.RequestRegistrarEmpresaDTO;
+import br.com.helpit.empresa.dto.request.RegistrarEmpresaRequestDTO;
 import br.com.helpit.empresa.exception.EmpresaNaoEncontradaException;
 import br.com.helpit.empresa.exception.UsuarioNaoElegivelException;
 import br.com.helpit.empresa.repository.EmpresaRepository;
@@ -18,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static java.lang.String.*;
@@ -46,7 +48,7 @@ public class EmpresaServiceImpl implements EmpresaService, AuthenticatedService 
 
     @Override
     @Transactional
-    public Empresa criarEmpresa(RequestRegistrarEmpresaDTO registrarEmpresaDTO) {
+    public Empresa criarEmpresa(RegistrarEmpresaRequestDTO registrarEmpresaDTO) {
 
         final Authentication authentication = getAuthentication();
 
@@ -64,6 +66,8 @@ public class EmpresaServiceImpl implements EmpresaService, AuthenticatedService 
                 .criarUsuarioEmpresa(usuarioAutenticado, novaEmpresa, CargoEmpresa.DONO);
 
         novaEmpresa.setUsuariosEmpresa(List.of(donoUsuarioEmpresa));
+
+        novaEmpresa.setArtigos(Collections.emptyList());
 
         return novaEmpresa;
     }

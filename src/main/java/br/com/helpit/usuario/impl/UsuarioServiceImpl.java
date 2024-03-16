@@ -3,7 +3,7 @@ package br.com.helpit.usuario.impl;
 import br.com.helpit.security.PasswordConfiguration;
 import br.com.helpit.usuario.CargoUsuario;
 import br.com.helpit.usuario.Usuario;
-import br.com.helpit.usuario.dto.request.RequestRegistrarUsuarioDTO;
+import br.com.helpit.usuario.dto.request.RegistrarUsuarioRequestDTO;
 import br.com.helpit.usuario.enums.CargoInterno;
 import br.com.helpit.usuario.enums.StatusAtividade;
 import br.com.helpit.usuario.exception.PassaporteNaoEncontradoException;
@@ -36,7 +36,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     @Transactional
-    public Usuario registrarUsuario(RequestRegistrarUsuarioDTO registrarUsuarioDTO) {
+    public Usuario registrarUsuario(RegistrarUsuarioRequestDTO registrarUsuarioDTO) {
 
         Usuario novoUsuario = Usuario
                 .builder()

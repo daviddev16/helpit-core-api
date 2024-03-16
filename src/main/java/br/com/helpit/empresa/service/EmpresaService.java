@@ -1,12 +1,11 @@
 package br.com.helpit.empresa.service;
 
 import br.com.helpit.empresa.Empresa;
-import br.com.helpit.empresa.dto.request.RequestRegistrarEmpresaDTO;
-import br.com.helpit.usuario.Usuario;
+import br.com.helpit.empresa.dto.request.RegistrarEmpresaRequestDTO;
 
 public interface EmpresaService {
 
-    Empresa criarEmpresa(RequestRegistrarEmpresaDTO registrarEmpresaDTO);
+    Empresa criarEmpresa(RegistrarEmpresaRequestDTO registrarEmpresaDTO);
 
     Empresa obterEmpresaPorId(Long empresaId);
 

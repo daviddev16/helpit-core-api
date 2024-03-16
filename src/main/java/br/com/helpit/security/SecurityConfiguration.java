@@ -22,18 +22,12 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    GrantedAuthorityDefaults grantedAuthorityDefaults() {
-        return new GrantedAuthorityDefaults("");
-    }
-
-    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(customizer ->
                 {
-                    /* Permite cadastramento do usuário apenas */
                     customizer
                             .requestMatchers(HttpMethod.POST, "/v1/auth/**")
                             .permitAll();
@@ -49,5 +43,9 @@ public class SecurityConfiguration {
                 .build();
     }
 
+    @Bean
+    GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults("");
+    }
 
 }
