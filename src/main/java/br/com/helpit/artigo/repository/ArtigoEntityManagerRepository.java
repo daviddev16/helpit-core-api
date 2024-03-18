@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.StringJoiner;
 
+import static br.com.helpit.util.SQLUtil.*;
 import static java.lang.String.*;
 
 @Repository
@@ -54,9 +55,9 @@ public class ArtigoEntityManagerRepository {
     @SuppressWarnings("unchecked")
     public List<Artigo> buscaArtigosComSearchDefinition(ArtigoSearchDefinition artigoSearchDefinition, Long idEmpresa) {
 
-        final boolean flagHasTextoPesquisaTitulo = artigoSearchDefinition.getTextoPesquisaTitulo() != null;
-        final boolean flagHasTextoPesquisaCorpo  = artigoSearchDefinition.getTextoPesquisaCorpo() != null;
-        final boolean flagHasTipoOrdenacao       = artigoSearchDefinition.getTipoOrdenacao() != null;
+        final boolean flagHasTextoPesquisaTitulo = nullWhenBlank(artigoSearchDefinition.getTextoPesquisaTitulo()) != null;
+        final boolean flagHasTextoPesquisaCorpo  = nullWhenBlank(artigoSearchDefinition.getTextoPesquisaCorpo()) != null;
+        final boolean flagHasTipoOrdenacao       = nullWhenBlank(artigoSearchDefinition.getTipoOrdenacao()) != null;
 
         final boolean flagHasWhereAnd         = (flagHasTextoPesquisaTitulo | flagHasTextoPesquisaCorpo);
 
@@ -81,8 +82,7 @@ public class ArtigoEntityManagerRepository {
 
         pgSqlBuilder.append(criteriaOrJoiner.toString());
 
-        String tipoOrdenacaoValidado = SQLUtil
-                .verificaTipoOrdenacao(artigoSearchDefinition.getTipoOrdenacao());
+        String tipoOrdenacaoValidado = verificaTipoOrdenacao(artigoSearchDefinition.getTipoOrdenacao());
 
         if (flagHasTipoOrdenacao)
             pgSqlBuilder

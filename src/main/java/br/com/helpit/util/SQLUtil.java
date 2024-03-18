@@ -14,4 +14,11 @@ public final class SQLUtil {
                 "ordenação válido [ASC ou DESC].", tipoOrdenacao));
     }
 
+    public static String nullWhenBlank(String str) {
+        if (str != null && str.isBlank()) {
+            return null;
+        }
+        return str;
+    }
+
 }
