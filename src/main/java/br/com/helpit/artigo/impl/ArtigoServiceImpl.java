@@ -12,49 +12,38 @@ import br.com.helpit.empresa.service.EmpresaService;
 import br.com.helpit.empresa.service.UsuarioEmpresaService;
 import br.com.helpit.usuario.Usuario;
 import br.com.helpit.usuario.service.UsuarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ArtigoServiceImpl implements ArtigoService, AuthenticatedService {
 
-    private final ArtigoRepository artigoRepository;
+    private @Autowired ArtigoRepository artigoRepository;
 
-    private final EmpresaService empresaService;
+    private @Autowired EmpresaService        empresaService;
+    private @Autowired UsuarioEmpresaService usuarioEmpresaService;
+    private @Autowired UsuarioService        usuarioService;
 
-    private final UsuarioEmpresaService usuarioEmpresaService;
-    private final UsuarioService usuarioService;
-
-    private final ArtigoRequestTransformer artigoRequestTransformer;
-
-    public ArtigoServiceImpl(ArtigoRepository artigoRepository,
-                             EmpresaService empresaService,
-                             UsuarioEmpresaService usuarioEmpresaService,
-                             UsuarioService usuarioService,
-                             ArtigoRequestTransformer artigoRequestTransformer) {
-
-        this.artigoRepository = artigoRepository;
-        this.empresaService = empresaService;
-        this.usuarioEmpresaService = usuarioEmpresaService;
-        this.usuarioService = usuarioService;
-        this.artigoRequestTransformer = artigoRequestTransformer;
-    }
+    private @Autowired ArtigoRequestTransformer artigoRequestTransformer;
 
     @Override
     @Transactional
-    public Artigo criarArtigo(RegistrarArtigoRequestDTO registrarArtigoDTO, Long empresaId) {
+    public Artigo criarArtigo(RegistrarArtigoRequestDTO registrarArtigoDTO, Long idEmpresa) {
 
         final Authentication authentication = getAuthentication();
 
         Usuario usuarioAutenticado = usuarioService
                 .obterUsuarioPorLoginOuEmail(authentication.getName());
 
-        Empresa empresa = empresaService.obterEmpresaPorId(empresaId);
+        Empresa empresa = empresaService.obterEmpresaPorId(idEmpresa);
 
         if (!usuarioEmpresaService.verificarAutorizacaoUsuarioEmpresa(usuarioAutenticado, empresa))
             throw new ServiceException(String.format("%s não possui acesso a empresa %d.",
-                    usuarioAutenticado.getLogin(), empresaId));
+                    usuarioAutenticado.getLogin(), idEmpresa));
 
         final Artigo novoArtigo = artigoRequestTransformer
                 .transformarArtigoRequestEmArtigo(registrarArtigoDTO);
@@ -63,5 +52,10 @@ public class ArtigoServiceImpl implements ArtigoService, AuthenticatedService {
         novoArtigo.setEmpresa(empresa);
 
         return artigoRepository.save(novoArtigo);
+    }
+
+    @Override
+    public List<Artigo> obterArtigos() {
+        return null;
     }
 }

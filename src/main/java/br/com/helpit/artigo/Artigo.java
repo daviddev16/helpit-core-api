@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 @Setter
@@ -53,7 +55,7 @@ public @Entity class Artigo {
 
 
     @ManyToOne(
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(
             name = "idusuario",
@@ -75,5 +77,11 @@ public @Entity class Artigo {
             nullable = false
     )
     private Empresa empresa;
+
+    @Column(
+            name = "dtcriacao",
+            nullable = false
+    )
+    private LocalDateTime dataCriacao;
 
 }

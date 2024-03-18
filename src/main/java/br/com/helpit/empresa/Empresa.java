@@ -1,6 +1,7 @@
 package br.com.helpit.empresa;
 
 import br.com.helpit.artigo.Artigo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 

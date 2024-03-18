@@ -15,27 +15,28 @@ public interface UsuarioEmpresaRepository extends JpaRepository<UsuarioEmpresa, 
 
     @Query(
             nativeQuery = true,
-            value = "SELECT count(DISTINCT idempresa) FROM helpit.empusuario WHERE idusuario = :paramUsuarioId"
+            value = "SELECT count(DISTINCT idempresa) FROM helpit.empusuario WHERE idusuario = :paramIdUsuario"
     )
-    Integer countEmpresasByUsuarioId(@Param("paramUsuarioId") Long usuarioId);
+    Integer countEmpresasByUsuarioId(@Param("paramIdUsuario") Long idUsuario);
 
 
     @Query(
             value = "SELECT usEmp FROM UsuarioEmpresa usEmp WHERE usEmp.usuario.id = :paramUsuarioId"
     )
-    List<UsuarioEmpresa> findAllUsuarioEmpresaByUsuarioId(@Param("paramUsuarioId") Long usuarioId);
+    List<UsuarioEmpresa> findAllUsuarioEmpresaByUsuarioId(@Param("paramUsuarioId") Long idUsuario);
 
 
     @Query(
-            value = "SELECT true FROM UsuarioEmpresa usEmp WHERE usEmp.usuario.id = :paramUsuarioId AND usEmp.empresa.id = :paramEmpresaId"
+            value = "SELECT true FROM UsuarioEmpresa usEmp WHERE usEmp.usuario.id = :paramIdUsuario AND usEmp.empresa.id = :paramIdEmpresa"
     )
-    Boolean existsUsuarioEmpresaWith(@Param("paramUsuarioId") Long usuarioId,
-                                     @Param("paramEmpresaId") Long empresaId);
+    Boolean existsUsuarioEmpresaWith(@Param("paramIdUsuario") Long idUsuario,
+                                     @Param("paramIdEmpresa") Long idEmpresa);
 
 
     default Boolean existsUsuarioEmpresaWith(Usuario usuario, Empresa empresa) {
         final Long empresaId = empresa.getId();
         final Long usuarioId = usuario.getId();
+
         return existsUsuarioEmpresaWith(usuarioId, empresaId);
     }
 

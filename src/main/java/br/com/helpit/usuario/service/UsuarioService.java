@@ -6,7 +6,7 @@ import br.com.helpit.usuario.enums.StatusAtividade;
 
 public interface UsuarioService {
 
-    Usuario registrarUsuario( RegistrarUsuarioRequestDTO registrarUsuarioDTO );
+    Usuario registrarUsuario(RegistrarUsuarioRequestDTO registrarUsuarioDTO);
 
     /* Onde passaporte é igual a e-mail ou login */
     Usuario obterUsuarioPorLoginOuEmail(String passaporte);

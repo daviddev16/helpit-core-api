@@ -87,10 +87,10 @@ public class EmpresaServiceImpl implements EmpresaService, AuthenticatedService 
     }
 
     @Override
-    public Empresa obterEmpresaPorId(Long empresaId) {
+    public Empresa obterEmpresaPorId(Long idEmpresa) {
         return empresaRepository
-                .findById(empresaId)
-                .orElseThrow(() -> new EmpresaNaoEncontradaException(empresaId));
+                .findById(idEmpresa)
+                .orElseThrow(() -> new EmpresaNaoEncontradaException(idEmpresa));
     }
 
 }

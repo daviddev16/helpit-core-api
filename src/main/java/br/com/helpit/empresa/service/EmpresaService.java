@@ -7,6 +7,6 @@ public interface EmpresaService {
 
     Empresa criarEmpresa(RegistrarEmpresaRequestDTO registrarEmpresaDTO);
 
-    Empresa obterEmpresaPorId(Long empresaId);
+    Empresa obterEmpresaPorId(Long idEmpresa);
 
 }

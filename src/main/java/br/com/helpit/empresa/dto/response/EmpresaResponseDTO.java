@@ -11,5 +11,4 @@ public record EmpresaResponseDTO(
         Long idEmpresa,
         String nome,
         String sufixo,
-        String administrador,
-        List<ArtigoResponseDTO> artigos) { }
+        String administrador) { }

@@ -9,7 +9,9 @@ import br.com.helpit.usuario.transformer.UsuarioResponseTransformer;
 import lombok.Builder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -22,12 +24,14 @@ public class ArtigoResponseTransformer {
         this.usuarioResponseTransformer = usuarioResponseTransformer;
     }
 
-    public <E extends Collection<ArtigoResponseDTO>> E transformarListaArtigoEmArtigoResponseDTO(Collection<Artigo> artigos,
-                                                                                                    Supplier<E> collectionSupplier)
-    {
-        return artigos.stream()
-                .map(this::transformarArtigoEmArtigoResponseDTO)
-                .collect(Collectors.toCollection(collectionSupplier));
+    public List<ArtigoResponseDTO> transformarListaArtigoEmArtigoResponseDTO(Collection<Artigo> artigos) {
+
+        List<ArtigoResponseDTO> artigoResponseDTOS = new ArrayList<>(artigos.size());
+
+        artigos.forEach(artigo ->
+                artigoResponseDTOS.add(transformarArtigoEmArtigoResponseDTO(artigo)));
+
+        return artigoResponseDTOS;
     }
 
     public ArtigoResponseDTO transformarArtigoEmArtigoResponseDTO(Artigo artigo) {
@@ -40,6 +44,7 @@ public class ArtigoResponseTransformer {
                     .idArtigo(artigo.getId())
                     .corpo(artigo.getCorpo())
                     .titulo(artigo.getTitulo())
+                    .dataCriacao(artigo.getDataCriacao())
                     .usuario(usuarioResponseDTO)
                 .build();
     }

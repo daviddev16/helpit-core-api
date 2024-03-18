@@ -34,7 +34,7 @@ public @Entity class ArtigoTag {
     @JoinColumn(
             name = "idtag",
             foreignKey =
-            @ForeignKey(name = "fk_artigotag_idtag")
+                @ForeignKey(name = "fk_artigotag_idtag")
     )
     private Tag tag;
 

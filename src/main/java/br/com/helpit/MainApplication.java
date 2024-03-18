@@ -1,6 +1,5 @@
 package br.com.helpit;
 
-import br.com.helpit.global.GlobalSettingsConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

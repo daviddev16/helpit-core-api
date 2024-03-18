@@ -10,14 +10,15 @@ import java.util.Set;
 
 public interface UsuarioEmpresaService {
 
-    UsuarioEmpresa criarUsuarioEmpresa( Usuario usuario, Empresa empresa, CargoEmpresa cargoEmpresa );
+    boolean verificarAutorizacaoUsuarioEmpresa(Usuario usuario, Empresa empresa);
 
-    Integer obterQuantidadeDeEmpresasDeUsuario( Usuario usuario );
+    Integer obterQuantidadeDeEmpresasDeUsuario(Usuario usuario);
 
-    Set<Empresa> obterEmpresasDeUsuario( Usuario usuario );
+    UsuarioEmpresa criarUsuarioEmpresa(Usuario usuario, Empresa empresa, CargoEmpresa cargoEmpresa);
+
+    Set<Empresa> obterEmpresasDeUsuario(Usuario usuario);
 
     Set<Empresa> obterEmpresasDeUsuarioAutenticado();
 
-    boolean verificarAutorizacaoUsuarioEmpresa(Usuario usuario, Empresa empresa);
 
 }

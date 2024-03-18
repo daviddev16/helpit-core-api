@@ -29,18 +29,12 @@ public class EmpresaResponseTransformer {
     }
 
     public EmpresaResponseDTO transformarEmpresaEmEmpresaResponseDTO(Empresa empresa) {
-
         final String passaporteAdministrador = obterPassaporteDonoDeEmpresa(empresa);
-
-        final List<ArtigoResponseDTO> artigoResponseDTOLista = artigoResponseTransformer
-                .transformarListaArtigoEmArtigoResponseDTO(empresa.getArtigos(), ArrayList::new);
-
         return EmpresaResponseDTO
                 .builder()
                     .idEmpresa(empresa.getId())
                     .sufixo(empresa.getSufixo())
                     .nome(empresa.getNome())
-                    .artigos(artigoResponseDTOLista)
                     .administrador(passaporteAdministrador)
                 .build();
     }
@@ -49,8 +43,8 @@ public class EmpresaResponseTransformer {
         return empresa.getUsuariosEmpresa()
                 .stream()
                     .filter(usuarioEmpresa -> usuarioEmpresa.getCargoEmpresa() == CargoEmpresa.DONO)
-                    .findFirst()
-                    .orElseThrow(IllegalStateException::new)
+                        .findFirst()
+                        .orElseThrow(IllegalStateException::new)
                     .getUsuario()
                         .getLogin();
     }
