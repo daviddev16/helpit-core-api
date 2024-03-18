@@ -1,6 +1,16 @@
 package br.com.helpit.artigo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.Objects;
+
+@Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Table(
         name = "artigotag",
@@ -30,6 +40,7 @@ public @Entity class ArtigoTag {
     private Artigo artigo;
 
 
+
     @ManyToOne
     @JoinColumn(
             name = "idtag",
@@ -38,4 +49,17 @@ public @Entity class ArtigoTag {
     )
     private Tag tag;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArtigoTag artigoTag = (ArtigoTag) o;
+        return Objects.equals(artigo, artigoTag.artigo) && Objects.equals(tag, artigoTag.tag);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artigo, tag);
+    }
 }

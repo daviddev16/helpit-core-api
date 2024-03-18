@@ -2,6 +2,7 @@ package br.com.helpit.empresa.controller.v1;
 
 import br.com.helpit.artigo.Artigo;
 import br.com.helpit.artigo.ArtigoSearchDefinition;
+import br.com.helpit.artigo.dto.request.AdicionarTagRequestDTO;
 import br.com.helpit.artigo.dto.request.RegistrarArtigoRequestDTO;
 import br.com.helpit.artigo.dto.response.ArtigoResponseDTO;
 import br.com.helpit.artigo.repository.ArtigoEntityManagerRepository;
@@ -65,6 +66,18 @@ public class EmpresaController {
     {
         final Artigo novoArtigo = artigoService.criarArtigo(registrarArtigoDTO, idEmpresa);
         return artigoResponseTransformer.transformarArtigoEmArtigoResponseDTO(novoArtigo);
+    }
+
+    @PatchMapping(value = "/{idEmpresa}/artigo/{idArtigo}")
+    @ResponseStatus(HttpStatus.OK)
+    public ArtigoResponseDTO adicionarTagsAoArtigo(@PathVariable Long idEmpresa,
+                                                   @PathVariable Long idArtigo,
+                                                   @RequestBody List<AdicionarTagRequestDTO> adicionarTagRequestDTOs)
+    {
+        final Artigo artigoAlterado = artigoService
+                .adicionarTagsAoArtigo(adicionarTagRequestDTOs, idEmpresa, idArtigo);
+
+        return artigoResponseTransformer.transformarArtigoEmArtigoResponseDTO(artigoAlterado);
     }
 
     @GetMapping(value = "/{idEmpresa}/artigo")

@@ -9,6 +9,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Builder
 @Getter
@@ -54,6 +56,13 @@ public @Entity class Artigo {
     private String corpo;
 
 
+    @Column(
+            name = "dtcriacao",
+            nullable = false
+    )
+    private LocalDateTime dataCriacao;
+
+
     @ManyToOne(
             fetch = FetchType.EAGER
     )
@@ -78,10 +87,8 @@ public @Entity class Artigo {
     )
     private Empresa empresa;
 
-    @Column(
-            name = "dtcriacao",
-            nullable = false
-    )
-    private LocalDateTime dataCriacao;
+
+    @OneToMany(mappedBy = "artigo")
+    private Set<ArtigoTag> artigoTags;
 
 }
